@@ -1,14 +1,12 @@
 #This file is for the test re test correlation:
 
-
-#library needed:
-
-library(data.table)
-library(magrittr)
+source('utility.R')
 
 #Data:
 
-Q_big5_20_100 <- fread("big5_domains_item_level.csv", header = T)
+# TODO GBY: where is the file big5_domains_item_level.csv?
+Q_big5_20_100 <- fread("Data/big5_domains_item_level.csv", header = T)
+# TODO JDR: continue checking after fix
 big5_100Q <- Q_big5_20_100[qlength=="100",]
 cols100 <- paste('q',1:100, sep='')
 big5.100Q<- subset(big5_100Q, 

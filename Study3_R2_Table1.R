@@ -1,16 +1,12 @@
 #This file is for the R2 in study 3, presented in table 1:
 
-
-#load library:
-
-library(rrpack)
-library(data.table)
+source('utility.R')
 
 #New Mturk Data for study2:
 
-new.data<- fread("new.mturk.reverse.csv", header = T)
-rotation.mat<- fread("rotation_mat.csv", header = T)
-pc5 <-fread("pc5.csv", header = T)
+new.data<- fread("Data/new.mturk.reverse.csv", header = T)
+rotation.mat<- fread("Data/rotation_mat.csv", header = T)
+pc5 <-fread("Data/pc5.csv", header = T)
 new.data.100<- na.omit (new.data)
 
 #scoring the big 5 by aggregation of the 20 related q:
@@ -1733,3 +1729,5 @@ mean(sum.table.12.test.wide$`Big Five`)
 mean(sum.table.12.test.wide$`PC Five`)
 
 fold.4.ten.dv.results<-ten.dv.results
+
+# TODO GBY: where is ten.dv.results?

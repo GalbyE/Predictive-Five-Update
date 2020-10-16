@@ -1,25 +1,22 @@
+## this file is for the R2 in Study 1:
 
-##this file is for the R2 in Study 1:
+# Load utility functions
+source('utility.R')
+
+# TODO JDR: which data to use? Save anonymized and compressed version 
+# TODO GBY: can you explain what is x and y datasets?
+# Load the data:
+# x.train<- fread("Data/x_matrix_rrr.csv", header = T)
+# y.train<- fread("Data/y_matrix_rrr.csv", header = T)
+# save(x.train, y.train, file='Data/xy.Rdata')
+load('Data/xy.Rdata')
 
 
-#load library:
-
-library(plyr)
-library(dplyr)
-library(rrpack)
-library(data.table)
-
-#Load the data:
-
-x.train<- fread("x_matrix_rrr.csv", header = T)
-y.train<- fread("y_matrix_rrr.csv", header = T)
 #scaling the data:
-
 y.train.scale<- scale(y.train,center=T, scale=F)
 x.train.scale<- scale(x.train,center=T, scale=F)
 
 #RRR with RRpack:
-
 rrpack.model<- rrr.fit(y.train.scale,
                        x.train.scale,
                        nrank = 5, 
@@ -28,11 +25,11 @@ rrpack.model<- rrr.fit(y.train.scale,
 #Extracting the rotation matrix from the model:
 
 rotation.mat <- as.matrix(rrpack.model$coef.ls %*% rrpack.model$A)
-#you can find this matrix as a CSV file in attached files. 
+# You can find this matrix as rotation.mat.csv
+
 
 
 ##create the PCA object and the PC5:####
-
 dim(x.train)
 PC <-prcomp(x.train)
 summary(PC)
@@ -54,16 +51,18 @@ sd<-NULL
 
 #reading the test files:
 
-test.iq<- fread("test.iq", header = T)
-test.swl<- fread("test.swl", header = T)
-test.cesd<- fread("test.cesd", header = T)
-test.liberal<- fread("test.liberal", header = T)
-test.risky<- fread("test.risky", header = T)
-test.network<- fread("test.network", header = T)
-test.nonhealthy<- fread("test.nonhealthy", header = T)
-test.svq.trans<- fread("test.svq.trans", header = T)
-test.svq.openness<- fread("test.svq.openness", header = T)
-test.empathy<- fread("test.empathy", header = T)
+test.iq<- fread("Data/Study1_test_data/test.iq.csv", header = T)
+test.swl<- fread("Data/Study1_test_data/test.swl.csv", header = T)
+test.cesd<- fread("Data/Study1_test_data/test.cesd.csv", header = T)
+test.liberal<- fread("Data/Study1_test_data/test.liberal.csv", header = T)
+test.risky<- fread("Data/Study1_test_data/test.risky.csv", header = T)
+test.network<- fread("Data/Study1_test_data/test.network.csv", header = T)
+test.nonhealthy<- fread("Data/Study1_test_data/test.nonhealthy.csv", header = T)
+test.svq.trans<- fread("Data/Study1_test_data/test.svq.trans.csv", header = T)
+test.svq.openness<- fread("Data/Study1_test_data/test.svq.openness.csv", header = T)
+test.empathy<- fread("Data/Study1_test_data/test.empathy.csv", header = T)
+
+# TODO JDR: change to synthetic data
 
 ###################################IQ################################
 
@@ -84,7 +83,6 @@ fold.assignment <- sample(1:folds, nrow(iq.new5.all), replace = TRUE)
 
 
 #new5 model with CV, fold=4:
-
 errors <- NULL
 
 for (k in 1:folds){
@@ -92,6 +90,7 @@ for (k in 1:folds){
   iq.cross.test <-  iq.new5.all[fold.assignment==k,] # test subset
   .ols <- lm(iq~V1+V2+V3+V4+V5  ,data = iq.cross.train) # train
   .predictions <- predict(.ols, newdata=iq.cross.test)
+  # TODO GBY: where it the R2 function defined?
   .errors <-   R2(iq.cross.test$iq, .predictions) # save prediction errors in the fold
   errors <- c(errors, .errors) # aggregate error over folds.
 }
@@ -1148,7 +1147,7 @@ r2<- c(r2, errors)
 ten.dv.results$r2<- r2
 ten.dv.results.for <- subset(ten.dv.results, Set == "Test")
 View(ten.dv.results.for)
-write.csv(ten.dv.results.for,'ten.dv.results.csv')
+# write.csv(ten.dv.results.for,'ten.dv.results.csv')
 
 sum.table.10<- ten.dv.results[,.(Mean=mean(r2)), by=.(Type,Set,dv)]
 sum.table.10.test.long<- as.data.table(sum.table.10[sum.table.10$Set=="Test"])

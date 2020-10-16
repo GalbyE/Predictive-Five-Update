@@ -1,14 +1,10 @@
 ##This file is for the Errors in Study 3 presented in table 1:
 
-#load library:
+source('utility.R')
 
-library(rrpack)
-library(data.table)
-
-
-new.data<- fread("new.mturk.reverse.csv", header = T)
-rotation.mat<- fread("rotation_mat.csv", header = T)
-pc5 <-fread("pc5.csv", header = T)
+new.data<- fread("Data/new.mturk.reverse.csv", header = T)
+rotation.mat<- fread("Data/rotation_mat.csv", header = T)
+pc5 <-fread("Data/pc5.csv", header = T)
 new.data.100<- na.omit (new.data)
 
 #scoring the big 5 by aggregation of the 20 related q:

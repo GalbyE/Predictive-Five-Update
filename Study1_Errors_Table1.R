@@ -1,30 +1,25 @@
 
 ##This file is for the Errors in Study 1:
 
-#load library:
-
-library(rrpack)
-library(data.table)
-
+source('utility.R')
 
 
 
 #reading the test files:
-test.iq<- fread("test.iq", header = T)
-test.swl<- fread("test.swl", header = T)
-test.cesd<- fread("test.cesd", header = T)
-test.liberal<- fread("test.liberal", header = T)
-test.risky<- fread("test.risky", header = T)
-test.network<- fread("test.network", header = T)
-test.nonhealthy<- fread("test.nonhealthy", header = T)
-test.svq.trans<- fread("test.svq.trans", header = T)
-test.svq.openness<- fread("test.svq.openness", header = T)
-test.empathy<- fread("test.empathy", header = T)
+test.iq<- fread("Data/Study1_test_data/test.iq.csv", header = T)
+test.swl<- fread("Data/Study1_test_data/test.swl.csv", header = T)
+test.cesd<- fread("Data/Study1_test_data/test.cesd.csv", header = T)
+test.liberal<- fread("Data/Study1_test_data/test.liberal.csv", header = T)
+test.risky<- fread("Data/Study1_test_data/test.risky.csv", header = T)
+test.network<- fread("Data/Study1_test_data/test.network.csv", header = T)
+test.nonhealthy<- fread("Data/Study1_test_data/test.nonhealthy.csv", header = T)
+test.svq.trans<- fread("Data/Study1_test_data/test.svq.trans.csv", header = T)
+test.svq.openness<- fread("Data/Study1_test_data/test.svq.openness.csv", header = T)
+test.empathy<- fread("Data/Study1_test_data/test.empathy.csv", header = T)
 
 
 #Load the data:
-x.train<- fread("x_matrix_rrr.csv", header = T)
-y.train<- fread("y_matrix_rrr.csv", header = T)
+load('Data/xy.Rdata')
 
 #scaling the data:
 
@@ -42,7 +37,7 @@ rrpack.model<- rrr.fit(y.train.scale,
 
 rotation.mat <- as.matrix(rrpack.model$coef.ls %*% rrpack.model$A)
 #write.csv(rotation.mat,'rotation_mat.csv',  row.names=FALSE)
-#you can find this matrix as a CSV file in attached files. 
+# You can find this matrix as rotation.mat.csv
 
 
 ##create the PCA object and the PC5:####

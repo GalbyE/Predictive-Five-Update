@@ -1,14 +1,11 @@
 #This file is for the R2 in study 2, presented in table 1:
 
 
-#load library:
+source('utility.R')
 
-library(rrpack)
-library(data.table)
-
-positive_data <- fread("positive experiences.csv", header = T)
-rotation.mat<- fread("rotation_mat.csv", header = T)
-pc5 <-fread("pc5.csv", header = T)
+positive_data <- fread("Data/positive experiences.csv", header = T)
+rotation.mat<- fread("Data/rotation_mat.csv", header = T)
+pc5 <-fread("Data/pc5.csv", header = T)
 q.pc5<- as.matrix(positive_data[,q1.x:q100]) %*% as.matrix(pc5)
 embu_all<- as.data.table(cbind(positive_data, q.pc5))
 
