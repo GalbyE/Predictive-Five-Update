@@ -1728,6 +1728,4 @@ mean(sum.table.12.test.wide$`Predictive Five`)
 mean(sum.table.12.test.wide$`Big Five`)
 mean(sum.table.12.test.wide$`PC Five`)
 
-fold.4.ten.dv.results<-ten.dv.results
 
-# TODO GBY: where is ten.dv.results?
