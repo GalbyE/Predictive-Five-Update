@@ -1,29 +1,33 @@
 #This file is for the test re test correlation:
 
-source('utility.R')
+
+#library needed:
+
+library(data.table)
+library(magrittr)
 
 #Data:
 
-# TODO GBY: where is the file big5_domains_item_level.csv?
-Q_big5_20_100 <- fread("Data/big5_domains_item_level.csv", header = T)
-# TODO JDR: continue checking after fix
-big5_100Q <- Q_big5_20_100[qlength=="100",]
-cols100 <- paste('q',1:100, sep='')
-big5.100Q<- subset(big5_100Q, 
-                   select =c('userid',cols100, "E","A","O","N","C"))
-big5.order<- na.omit(setorder(big5.100Q,col=userid))
-allq<-as.matrix(big5.order[,q1:q100])
-new5.<-allq%*%as.matrix(rotation.mat)
+#Q_big5_20_100 <- fread("big5_domains_item_level.csv", header = T)
+#big5_100Q <- Q_big5_20_100[qlength=="100",]
+#cols100 <- paste('q',1:100, sep='')
+#big5.100Q<- subset(big5_100Q, 
+#                   select =c('userid',cols100, "E","A","O","N","C"))
+#big5.order<- na.omit(setorder(big5.100Q,col=userid))
+#allq<-as.matrix(big5.order[,q1:q100])
+#new5.<-allq%*%as.matrix(rotation.mat)
 
-big5.order<- as.data.table(cbind(big5.order,new5.))
-dim(big5.order)
-all.dupli<-big5.order$userid[duplicated(big5.order$userid)]
-dupli<-big5.order[userid%in%all.dupli]
-dupli$one<- duplicated(dupli$userid)
-first.time<- dupli[one==FALSE]
-temp<-dupli[one==TRUE]
-temp$two<-duplicated(temp$userid)
-second.time<-temp[two==FALSE]
+#big5.order<- as.data.table(cbind(big5.order,new5.))
+#dim(big5.order)
+#all.dupli<-big5.order$userid[duplicated(big5.order$userid)]
+#dupli<-big5.order[userid%in%all.dupli]
+#dupli$one<- duplicated(dupli$userid)
+#first.time<- dupli[one==FALSE]
+#temp<-dupli[one==TRUE]
+#temp$two<-duplicated(temp$userid)
+#second.time<-temp[two==FALSE]
+first.time <- fread("first_time.csv", header = T)
+second.time <- fread("second_time.csv", header = T)
 
 dim(first.time) 
 dim(second.time)
